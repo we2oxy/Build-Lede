@@ -21,7 +21,7 @@ on:
         required: false
         default: 'true'
   # schedule:
-    # - cron:  '20 11 */3 * *'
+    # - cron:  '40 18 */3 * *'
   # watch:
     # types: started
 

@@ -4,10 +4,6 @@ on:
   repository_dispatch:
   workflow_dispatch:
     inputs:
-      init:
-        description: 'Init Building Dependencies'
-        required: false
-        default: 'true'
       ssh:
         description: 'SSH connection to Actions'
         required: false

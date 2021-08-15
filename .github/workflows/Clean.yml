@@ -4,10 +4,10 @@ on:
   repository_dispatch:
   workflow_dispatch:
     inputs:
-      artifacts:
-        description: 'Cleanup-Old-Artifacts'
-        required: true
-        default: '"15d"'
+      # artifacts:
+        # description: 'Cleanup-Old-Artifacts'
+        # required: true
+        # default: '"15d"'
       workflow:
         description: 'Cleanup-Workflow-Runs'
         required: true

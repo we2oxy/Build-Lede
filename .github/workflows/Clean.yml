@@ -20,17 +20,16 @@ on:
     - cron: 0 2 */7 * *
     
 jobs: 
-  Cleanup-Old-Artifacts:
-    runs-on: ubuntu-18.04
-    steps:
-    - name: Cleanup Old Action Artifacts
-      uses: kolpav/purge-artifacts-action@master
-      with:
-        token: ${{ github.token }}
-        expire-in: ${{ github.event.inputs.artifacts }}
+  # Cleanup-Old-Artifacts:
+    # runs-on: ubuntu-18.04
+    # steps:
+    # - name: Cleanup Old Action Artifacts
+      # uses: kolpav/purge-artifacts-action@master
+      # with:
+        # token: ${{ github.token }}
+        # expire-in: ${{ github.event.inputs.artifacts }}
         
   Cleanup-Workflow-Runs:
-    needs: Cleanup-Old-Artifacts
     runs-on: ubuntu-18.04
     steps:
       - name: Cleanup Workflow Runs

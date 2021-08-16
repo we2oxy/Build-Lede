@@ -1,8 +1,8 @@
 name:  x86-lede-1701
 
 on:
-  # repository_dispatch:
-  # workflow_dispatch:
+  repository_dispatch:
+  workflow_dispatch:
     inputs:
       ssh:
         description: 'SSH connection to Actions'

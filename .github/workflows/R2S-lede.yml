@@ -78,7 +78,7 @@ jobs:
         ./lede-master.sh
         sed -i '$d'  /build/lede/package/lean/default-settings/files/zzz-default-settings
         cat /build/OpenWrtConfig/uciconf/lede-master/lede-master_settings >> /build/lede/package/lean/default-settings/files/zzz-default-settings
-        sed -i 's/10.0.0.199/10.0.0.99/g' /build/lede/package/lean/default-settings/files/zzz-default-settings
+        sed -i 's/10.0.0.199/10.0.0.77/g' /build/lede/package/lean/default-settings/files/zzz-default-settings
         cat /build/lede/package/lean/default-settings/files/zzz-default-settings
     
     - name: SSH connection to Actions

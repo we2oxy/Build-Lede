@@ -81,7 +81,7 @@ jobs:
         sed -i 's/10.0.0.99/10.0.0.88/g' /build/lede/package/lean/default-settings/files/zzz-default-settings
         cat /build/lede/package/lean/default-settings/files/zzz-default-settings
         cp -f /build/lede/files/etc/lede-1701/x86/index.htm /build/lede/files/etc/
-        sed -i "/CPU usage/a\                \<tr><td width="33%"><%:Build Date%></td><td>$(date +%F_%H%M%S)</tr>" /build/lede/files/etc/index.htm
+        sed -i "/Source Code/a\                \<tr><td width="33%"><%:Build Date%></td><td>$(date +%F_%H%M%S)</tr>" /build/lede/files/etc/index.htm
         grep -B 10 "Build Date" /build/lede/files/etc/index.htm
         
     - name: SSH connection to Actions

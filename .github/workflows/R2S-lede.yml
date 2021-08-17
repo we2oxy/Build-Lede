@@ -82,9 +82,9 @@ jobs:
         cat /build/OpenWrtConfig/uciconf/lede-master/lede-master_settings >> /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i 's/10.0.0.199/10.0.0.77/g' /build/lede/package/lean/default-settings/files/zzz-default-settings
         cat /build/lede/package/lean/default-settings/files/zzz-default-settings
-        sed -i "/CPU usage/a\                \<tr><td width="33%"><%:Build Date%></td><td>$(date +%F_%H%M%S)</tr>" /build/lede/package/lean/autocore/files/arm/index.htm
-        sed -i '/Kernel Version/a\                \<tr><td width="33%"><%:IPADDR%></td><td><%=luci.sys.exec("uci get network.lan.ipaddr") or "?"%></td></tr>' /build/lede/package/lean/autocore/files/arm/index.htm
-        grep -B 10 "Build Date" /build/lede/package/lean/autocore/files/arm/index.htm
+        cp -f /build/OpenWrtConfig/files/etc/lede/arm/index.htm /build/lede/files/etc/
+        sed -i "/CPU usage/a\                \<tr><td width="33%"><%:Build Date%></td><td>$(date +%F_%H%M%S)</tr>" /build/lede/files/etc/index.htm
+        grep -B 10 "Build Date" /build/lede/files/etc/index.htm
         
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0

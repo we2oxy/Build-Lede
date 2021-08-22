@@ -105,9 +105,7 @@ jobs:
         tree bin/
         tree -d bin/
         cd /build/lede/bin/targets/x86/64/ && ls -lSha
-        gzip -d *.gz
-        gzip -9 *.img
-        gzip -9 *.vmdk
+
     - name: Prepare artifact
       run: |
         rm -rf $(find /build/lede/bin/targets/ -type d -name "packages")

@@ -17,7 +17,7 @@ on:
         required: false
         default: 'true'
   schedule:
-    - cron:  '40 18 * * *'
+    - cron:  '40 18 */3 * *'
   watch:
     types: started
 
@@ -38,13 +38,13 @@ jobs:
       run: |
         sudo timedatectl set-timezone "$TZ"
         echo "Init Building":$(date +%F_%H%M%S)
-        docker rmi $(docker images -q)
-        sudo -E apt-get remove -y --purge azure-cli ghc zulu* hhvm llvm* firefox google* dotnet* powershell mysql* php* mssql-tools msodbcsql17 android*
-        sudo -E apt-get update -y
-        sudo -E apt-get full-upgrade -y
-        sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3.5 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget
-        sudo -E apt-get autoremove -y --purge
-        sudo -E apt-get clean -y
+        docker rmi $(docker images -q) &>/dev/null
+        sudo -E apt-get remove -y --purge azure-cli ghc zulu* hhvm llvm* firefox google* dotnet* powershell mysql* php* mssql-tools msodbcsql17 android* &>/dev/null
+        sudo -E apt-get update -y &>/dev/null
+        sudo -E apt-get full-upgrade -y &>/dev/null
+        sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3.5 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget  &>/dev/null
+        sudo -E apt-get autoremove -y --purge &>/dev/null
+        sudo -E apt-get clean -y &>/dev/null
         sudo -E swapoff -a
         sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc /swapfile
        
@@ -65,8 +65,8 @@ jobs:
         cat -n feeds.conf.default
         rm -rf tmp/
         ls -lah 
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
+        ./scripts/feeds update -a &>/dev/null
+        ./scripts/feeds install -a &>/dev/null
 
     - name: Configuration Customization
       id: configuration

@@ -57,7 +57,7 @@ jobs:
         sudo mkdir -pv /build/{package,upload}
         sudo chown -R runner:runner /build
         cd /build
-        svn co https://github.com/we2oxy/OpenWrtConfig/trunk/ OpenWrtConfig
+        git clone https://github.com/we2oxy/OpenWrtConfig.git OpenWrtConfig
         git clone https://github.com/coolsnowwolf/lede.git "lede"
         cd lede
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> feeds.conf.default

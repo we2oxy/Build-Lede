@@ -133,7 +133,7 @@ jobs:
         echo "::set-output name=release_tag::$(date +%F_%H%M%S)_lede-R2S"
         echo "::set-output name=release_date::$(date +"%F_%H%M%S")"
         touch release.txt
-        echo "10.0.0.99" > release.txt
+        echo "http://10.0.0.99" > release.txt
         echo "::set-output name=status::success"
         
     - name: Upload firmware to release

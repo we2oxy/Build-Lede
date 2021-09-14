@@ -101,7 +101,7 @@ jobs:
         pwd  && cat /build/upload/x86-lede.buildinfo
         wc -l /build/upload/x86-lede.buildinfo
         echo "start make!":$(date +%F_%H%M%S)
-        time make -j$[$(nproc)+1] || sh /build/OpenWrtConfig/scripts/lede/rebuild.sh
+        time make -j$[$(nproc)+1] || sh -c "echo 'Multi-threaded compilation failed, try single-threaded compilation!!!' && /build/OpenWrtConfig/scripts/lede/rebuild.sh"
         tree bin/
         tree -d bin/
         cd /build/lede/bin/targets/x86/64/ && ls -lSha

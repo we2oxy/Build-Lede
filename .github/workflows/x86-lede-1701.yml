@@ -47,10 +47,6 @@ jobs:
         sudo -E apt-get clean -y &>/dev/null
         sudo -E swapoff -a
         sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc /swapfile
-        alias ll='ls -lh'
-        alias mken='make menuconfig'
-        alias mkdf='make defconfig'
-        alias mkcl='make clean'
         
     - name: Clone Source
       run: |
@@ -103,7 +99,7 @@ jobs:
         pwd  && cat /build/upload/x86-lede-1701.buildinfo
         wc -l /build/upload/x86-lede-1701.buildinfo
         echo "start make!":$(date +%F_%H%M%S)
-        time make -j$[$(nproc)+1] || sh -c "echo 'Multi-threaded compilation failed, try single-threaded compilation!!!' && /build/OpenWrtConfig/scripts/lede/rebuild.sh"
+        time make -j$[$(nproc)+1] || make -j1 V=s
         tree bin/
         tree -d bin/
         cd /build/lede/bin/targets/x86/64 && ls -lSha

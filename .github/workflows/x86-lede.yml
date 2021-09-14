@@ -47,7 +47,11 @@ jobs:
         sudo -E apt-get clean -y &>/dev/null
         sudo -E swapoff -a
         sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc /swapfile
-       
+        alias ll='ls -lh'
+        alias mken='make menuconfig'
+        alias mkdf='make defconfig'
+        alias mkcl='make clean'
+        
     - name: Clone Source
       run: |
         echo "Clone Source":$(date +%F_%H%M%S)

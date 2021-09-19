@@ -1,12 +1,5 @@
 #!/bin/bash
 
-fun_set_alias(){
-	alias ll='ls -lh'
-	alias mken='make menuconfig'
-	alias mkdf='make defconfig'
-	alias mkcl='make clean'
-}
-
 fun_backup_defaultsettings(){
 	echo "\n-----backup start-----"
 	cd /build/lede/package/lean/default-settings/files/
@@ -90,12 +83,6 @@ fun_ssrplus(){
 	echo "\n-----modify ssrplus successful------"
  }
  
-fun_check_privilege(){
-	echo "\n-----check_privilege start-----"
-	cd /
-	sudo chown -R runner:runner /build/
-	echo "\n-----check_privilege successful------"
- }
 
 fun_backup_defaultsettings
 fun_del_passwd
@@ -103,5 +90,4 @@ fun_sync_sourecode
 fun_import_rules
 fun_vssr
 fun_ssrplus
-fun_check_privilege
-fun_set_alias
+

@@ -45,6 +45,7 @@ fun_import_rules(){
 	svn co https://github.com/we2oxy/OpenWrtConfig/trunk/files/etc /build/lede/files/etc
 	cd /build/lede/files/etc/
 	cp -R ssrplus/ vssr/
+	rm -rf .svn/
 	ls -lahR /build/lede/files/
 	echo "\n-----import_rules successful------"
  }

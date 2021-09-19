@@ -69,7 +69,7 @@ jobs:
         sed -i '$d'  /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i '/DISTRIB_REVISION/d' /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i '/DISTRIB_DESCRIPTION/d' /build/lede/package/lean/default-settings/files/zzz-default-settings
-        cat /build/OpenWrtConfig/uciconf/lede-1701/lede-1701_settings >> /build/lede/package/lean/default-settings/files/zzz-default-settings
+        cat $GITHUB_WORKSPACE/uciconf/lede-1701/lede-1701_settings >> /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i 's/10.0.0.99/10.0.0.88/g' /build/lede/package/lean/default-settings/files/zzz-default-settings
         cat /build/lede/package/lean/default-settings/files/zzz-default-settings
         
@@ -114,12 +114,12 @@ jobs:
     - name: Prepare artifact
       run: |
         rm -rf $(find /build/lede/bin/targets/ -type d -name "packages")
-        cp -rf $(find  /build/lede/bin/targets/ -type f) /build/upload/
+        cp -rf $(find /build/lede/bin/targets/ -type f) /build/upload/
         cp -rf $(find /build/lede/bin/packages/ -type f -name "*.ipk") /build/package/
-        cd /build/ && zip -qr /build/upload/package_$(date +%F_%H%M%S).zip  package/
+        cd /build/ && zip -qr /build/upload/package_$(date +%F_%H%M%S).zip package/
         cd /build/upload/
         ls -lh 
-        for source_name in `ls openwrt*`;do tag_name=$(date +%F_%H%M%S)_ modify_name=$(tag_name)$(source_name);mv $(source_name) $(modify_name);done
+        for source_name in `ls openwrt*`;do tag_name=$(date +%F_%H%M%S)_  modify_name=$tag_name$source_name;mv $source_name $modify_name;done
         ls -lh /build/upload/
         
     - name: Deliver firmware

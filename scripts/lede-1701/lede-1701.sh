@@ -16,9 +16,9 @@ fun_sync_sourecode(){
 	git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
 	svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash luci-app-openclash
 	svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ openwrt-passwall
-	cd /build/lede/feeds/helloworld/
-	rm -rf luci-app-ssr-plus/
-	svn co https://github.com/we2oxy/helloworld/branches/dnsproxy/luci-app-ssr-plus luci-app-ssr-plus
+	#cd /build/lede/feeds/helloworld/
+	#rm -rf luci-app-ssr-plus/
+	#svn co https://github.com/we2oxy/helloworld/branches/dnsproxy/luci-app-ssr-plus luci-app-ssr-plus
 	echo "\n-----sync_sourecode successful------"
 }
 

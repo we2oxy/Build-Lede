@@ -88,7 +88,7 @@ jobs:
         echo "Build lede":$(date +%F_%H%M%S)
         cd /build/lede/ && ls -lash
         make defconfig
-        make -j8 download || make -j8 download V=s
+        make -j8 download || make -j1 download || make -j1 download V=s 
         ./scripts/diffconfig.sh > /build/buildinfo/R2S-lede.buildinfo
         pwd && cat /build/buildinfo/R2S-lede.buildinfo
         wc -l /build/buildinfo/R2S-lede.buildinfo
@@ -108,7 +108,7 @@ jobs:
         cd /build/lede/
         ls -lash
         echo "start make!":$(date +%F_%H%M%S)
-        make -j$(($(nproc) + 1)) || make -j1 V=s
+        make -j$(($(nproc) + 1)) || sh -c "make dirclean && git pull && ./scripts/feeds update -a && ./scripts/feeds install -a && cat .config && make -j1" || make -j1 V=s
         tree bin/
         tree -d bin/
         cd /build/lede/bin/targets/rockchip/armv8 && ls -lSha

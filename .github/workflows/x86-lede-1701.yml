@@ -93,6 +93,8 @@ jobs:
         wc -l /build/buildinfo/x86-lede-1701.buildinfo
         sed -i '/is not set/d' /build/buildinfo/x86-lede-1701.buildinfo
         wc -l /build/buildinfo/x86-lede-1701.buildinfo
+        cat /build/buildinfo/x86-lede-1701.buildinfo
+        echo "########################################"
 
     - name: Deliver buildinfo
       if: ${{ always() }}

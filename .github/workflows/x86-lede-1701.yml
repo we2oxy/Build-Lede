@@ -88,7 +88,10 @@ jobs:
         make defconfig
         make -j8 download || make -j1 download || make -j1 download V=s 
         ./scripts/diffconfig.sh > /build/buildinfo/x86-lede-1701.buildinfo
-        pwd && cat /build/buildinfo/x86-lede-1701.buildinfo
+        pwd && cat /build/buildinfo/x86-lede-1701.buildinfo && pwd
+        sed -n '/is not set/p' /build/buildinfo/x86-lede-1701.buildinfo
+        wc -l /build/buildinfo/x86-lede-1701.buildinfo
+        sed -i '/is not set/d' /build/buildinfo/x86-lede-1701.buildinfo
         wc -l /build/buildinfo/x86-lede-1701.buildinfo
 
     - name: Deliver buildinfo

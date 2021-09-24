@@ -115,7 +115,7 @@ jobs:
         cd /build/lede/
         ls -lash
         echo "start make!":$(date +%F_%H%M%S)
-        sh -c "cat .config && echo '$(nproc) thread compile' && make -j$(($(nproc) + 1))" || sh -c "make dirclean && git pull && ./scripts/feeds update -a && ./scripts/feeds install -a && cat .config && echo '***************Rebuild***************' && make -j1 V=s"
+        sh -c "cat .config && echo '*************** $(nproc) thread compile ***************' && make -j$(($(nproc) + 1))" || sh -c "make dirclean && git pull && ./scripts/feeds update -a && ./scripts/feeds install -a && cat .config && echo '***************Rebuild***************' && make -j1 V=s"
         tree bin/
         tree -d bin/
         cd /build/lede/bin/targets/rockchip/armv8 && ls -lSha

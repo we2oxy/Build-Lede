@@ -148,12 +148,11 @@ jobs:
     - name: mk s905d n1
       run: |
         cp /build/lede/bin/targets/armvirt/64/openwrt-armvirt-64-default-rootfs.tar.gz /build/openwrt_packit/
-        sudo su root
         cd /build/openwrt_packit
-        bash build_s905d_n1.sh
-        ls -lash tmp/
-        gzip -9 tmp/*.img
-        cp tmp/*.img /build/upload/
+        sudo bash build_s905d_n1.sh
+        sudo ls -lash tmp/
+        sudo gzip -9 tmp/*.img
+        sudo cp tmp/*.img /build/upload/
         
     - name: Deliver firmware
       if: ${{ always() }}

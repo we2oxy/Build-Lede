@@ -82,8 +82,7 @@ jobs:
         mv /build/openwrt_packit/make.env /build/openwrt_packit/make.envbak
         cp $GITHUB_WORKSPACE/uciconf/Phicomm_N1/make.env /build/openwrt_packit/make.env
         cp $GITHUB_WORKSPACE/uciconf/Phicomm_N1/*.gz /build/openwrt_packit/
-        echo "WHOAMI=h68776" > /build/openwrt_packit/whoami
-        sed -i "/KERNEL_VERSION/iOPENWRT_VER='$(date +%F)'" /build/openwrt_packit/make.env
+        sed -i "N;10aOPENWRT_VER='$(date +%F)'" /build/openwrt_packit/make.env
         mkdir scripts && cp mk_s905d_n1.sh build_s905d_n1.sh
         mv mk*.sh scripts/
         ls -lh 

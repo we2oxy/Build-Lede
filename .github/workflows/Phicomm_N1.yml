@@ -1,4 +1,4 @@
-name:  flippy-N1
+name:  N1-lede
 
 on:
   repository_dispatch:
@@ -22,7 +22,7 @@ on:
     types: started
 
 jobs:
-  Build:
+  N1-lede:
     runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id
     

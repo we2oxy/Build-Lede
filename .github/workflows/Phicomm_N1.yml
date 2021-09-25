@@ -8,14 +8,14 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-      tag:
-        description: 'Generate release tag'
-        required: false
-        default: 'true'
-      release:
-        description: 'Upload firmware to release'
-        required: false
-        default: 'true'
+      # tag:
+        # description: 'Generate release tag'
+        # required: false
+        # default: 'true'
+      # release:
+        # description: 'Upload firmware to release'
+        # required: false
+        # default: 'true'
   schedule:
     - cron:  '40 8 * * 5'
   watch:
@@ -31,7 +31,6 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Init Building Dependencies
-      #if: ${{ github.event.inputs.init == 'true' }}
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |

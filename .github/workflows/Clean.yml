@@ -1,4 +1,4 @@
-name: Clean
+name: AutoClean
 
 on:
   repository_dispatch:
@@ -12,10 +12,10 @@ on:
         description: 'Cleanup-Workflow-Runs'
         required: true
         default: '15'
-      releases:
-        description: 'Cleanup-old-Releases'
-        required: true
-        default: '15'
+      # releases:
+        # description: 'Cleanup-old-Releases'
+        # required: true
+        # default: '15'
   schedule:
     - cron: 0 2 */15 * *
     
@@ -37,17 +37,17 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: ${{ github.event.inputs.workflow }}
+          retain_days: 45
  
-  Cleanup-old-Releases:
-    needs: Cleanup-Workflow-Runs
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Cleanup-old-Releases
-        uses: dev-drprasad/delete-older-releases@v0.1.0
-        with:
-          keep_latest: ${{ github.event.inputs.releases }}
-          delete_tags: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # Cleanup-old-Releases:
+    # needs: Cleanup-Workflow-Runs
+    # runs-on: ubuntu-18.04
+    # steps:
+      # - name: Cleanup-old-Releases
+        # uses: dev-drprasad/delete-older-releases@v0.1.0
+        # with:
+          # keep_latest: ${{ github.event.inputs.releases }}
+          # delete_tags: true
+        # env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           

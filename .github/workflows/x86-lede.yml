@@ -17,7 +17,7 @@ on:
         required: false
         default: 'true'
   schedule:
-    - cron:  '40 15 */5 * *'
+    - cron:  '40 8 * * 5'
   watch:
     types: started
 

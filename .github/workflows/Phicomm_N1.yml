@@ -152,7 +152,7 @@ jobs:
         sudo bash build_s905d_n1.sh
         sudo ls -lash tmp/
         sudo gzip -9 tmp/*.img
-        sudo cp tmp/*.img /build/upload/
+        sudo cp tmp/* /build/upload/
         
     - name: Deliver firmware
       if: ${{ always() }}

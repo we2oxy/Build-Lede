@@ -128,7 +128,6 @@ jobs:
         cd /build/upload/
         ls -lh 
         for source_name in `ls openwrt*`;do tag_name=$(date +%F_%H%M%S)_  modify_name=$tag_name$source_name;mv $source_name $modify_name;done
-        gzip -9 "*.img" "*.vmdk"
         ls -lh /build/upload/
         
     - name: Deliver firmware

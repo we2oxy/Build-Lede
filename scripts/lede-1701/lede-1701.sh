@@ -16,9 +16,6 @@ fun_sync_sourecode(){
 	git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
 	svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash luci-app-openclash
 	svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ openwrt-passwall
-	#cd /build/lede/feeds/helloworld/
-	#rm -rf luci-app-ssr-plus/
-	#svn co https://github.com/we2oxy/helloworld/branches/dnsproxy/luci-app-ssr-plus luci-app-ssr-plus
 	echo "\n-----sync_sourecode successful------"
 }
 
@@ -38,10 +35,6 @@ fun_del_passwd(){
  
 fun_import_rules(){
 	echo "\n-----import_rules start-----"
-	#mkdir -pv /build/lede/files/etc/{vssr,ssrplus,crontabs,$(date +%F_%H%M%S)}
-	#cp -f /build/OpenWrtConfig/appconf/ssrplus/*  /build/lede/files/etc/vssr/
-	#cp -f /build/OpenWrtConfig/appconf/ssrplus/*  /build/lede/files/etc/ssrplus/
-	#cp -f /build/OpenWrtConfig/files/etc/crontabs/root  /build/lede/files/etc/crontabs/root
 	svn co https://github.com/we2oxy/OpenWrtConfig/trunk/files/etc /build/lede/files/etc
 	cd /build/lede/files/etc/
 	cp -R ssrplus/ vssr/

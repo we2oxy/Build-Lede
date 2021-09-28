@@ -66,6 +66,8 @@ jobs:
       run: |
         echo "Configuration Customization":$(date +%F_%H%M%S)
         sh $GITHUB_WORKSPACE/scripts/lede-master/lede-master.sh
+        sed -i 's/luci-theme-bootstrap/luci-theme-argon/' /build/lede/feeds/luci/collections/luci/Makefile
+        cat /build/lede/feeds/luci/collections/luci/Makefile
         cat $GITHUB_WORKSPACE/buildinfo/N1-openwrt.buildinfo > "/build/lede/.config"
         sed -i '$d' /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i '/DISTRIB_REVISION/d' /build/lede/package/lean/default-settings/files/zzz-default-settings

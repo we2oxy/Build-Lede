@@ -37,7 +37,7 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: 45
+          retain_days: 1
  
   # Cleanup-old-Releases:
     # needs: Cleanup-Workflow-Runs

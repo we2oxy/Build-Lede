@@ -59,14 +59,14 @@ jobs:
         git clone --depth=1 -b master https://github.com/vernesong/OpenClash
         cd /build/lede-1701
         sh -c "./scripts/feeds update -a && ./scripts/feeds install -a"
-        
+        wget -O /build/lede-1701/x86-lede-1701.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/x86-lede-1701.buildinfo
+        cat /build/lede-1701/x86-lede-1701.buildinfo > "/build/lede-1701/.config"
     - name: Configuration Customization
       id: configuration
       run: |
         echo "Configuration Customization":$(date +%F_%H%M%S)
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/' /build/lede-1701/feeds/luci/collections/luci/Makefile
         cat /build/lede-1701/feeds/luci/collections/luci/Makefile
-        cat $GITHUB_WORKSPACE/buildinfo/x86-lede-1701.buildinfo > "/build/lede-1701/.config"
         sed -i '$d' /build/lede-1701/package/lean/default-settings/files/zzz-default-settings
         sed -i '/DISTRIB_REVISION/d' /build/lede-1701/package/lean/default-settings/files/zzz-default-settings
         sed -i '/DISTRIB_DESCRIPTION/d' /build/lede-1701/package/lean/default-settings/files/zzz-default-settings

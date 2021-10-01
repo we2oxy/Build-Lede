@@ -69,7 +69,8 @@ jobs:
         git clone --depth=1 -b master https://github.com/vernesong/OpenClash
         cd /build/lede
         sh -c "./scripts/feeds update -a && ./scripts/feeds install -a"
-
+        wget -O /build/lede/N1-openwrt.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/N1-openwrt.buildinfo
+        cat /build/lede/N1-openwrt.buildinfo > "/build/lede/.config"
     - name: Configuration Customization
       id: configuration
       run: |
@@ -77,7 +78,6 @@ jobs:
         # system
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/' /build/lede/feeds/luci/collections/luci/Makefile
         cat /build/lede/feeds/luci/collections/luci/Makefile
-        cat $GITHUB_WORKSPACE/buildinfo/N1-openwrt.buildinfo > "/build/lede/.config"
         sed -i '$d' /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i '/DISTRIB_REVISION/d' /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i '/DISTRIB_DESCRIPTION/d' /build/lede/package/lean/default-settings/files/zzz-default-settings

@@ -8,16 +8,8 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-      # tag:
-        # description: 'Generate release tag'
-        # required: false
-        # default: 'true'
-      # release:
-        # description: 'Upload firmware to release'
-        # required: false
-        # default: 'true'
   schedule:
-    - cron:  '40 8 * * 5'
+    - cron:  '40 15 * * 4'
   watch:
     types: started
 

@@ -9,7 +9,7 @@ on:
         required: false
         default: 'false'
   schedule:
-    - cron:  '40 8 * * 5'
+    - cron:  '40 15 * * 4'
   watch:
     types: started
 

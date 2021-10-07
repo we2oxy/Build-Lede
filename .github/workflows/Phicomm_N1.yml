@@ -35,7 +35,6 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo timedatectl set-timezone "Asia/Shanghai"
-        sudo -E swapoff -a
         echo "Init Building:$(date +%F_%H%M%S)"
         sudo -E swapoff -a
         docker rmi $(docker images -q) 

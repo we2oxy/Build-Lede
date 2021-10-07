@@ -21,7 +21,7 @@ on:
     
 jobs: 
   # Cleanup-Old-Artifacts:
-    # runs-on: ubuntu-18.04
+    # runs-on: ubuntu-latest
     # steps:
     # - name: Cleanup Old Action Artifacts
       # uses: kolpav/purge-artifacts-action@master
@@ -30,7 +30,7 @@ jobs:
         # expire-in: ${{ github.event.inputs.artifacts }}
         
   Cleanup-Workflow-Runs:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Cleanup Workflow Runs
         uses: GitRML/delete-workflow-runs@v1.2.1
@@ -41,7 +41,7 @@ jobs:
  
   # Cleanup-old-Releases:
     # needs: Cleanup-Workflow-Runs
-    # runs-on: ubuntu-18.04
+    # runs-on: ubuntu-latest
     # steps:
       # - name: Cleanup-old-Releases
         # uses: dev-drprasad/delete-older-releases@v0.1.0

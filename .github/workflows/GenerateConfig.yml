@@ -6,7 +6,7 @@ on:
 
 jobs:
   lede1701:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
    
     steps:
     - name: Checkout Repository
@@ -61,7 +61,7 @@ jobs:
         if-no-files-found: ignore
         
   lede:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2

@@ -211,7 +211,6 @@ jobs:
         if-no-files-found: ignore
         
     - name: Generate release tag
-      #if: steps.build.outputs.BUILD_STATUS == 'success'
       id: tag
       run: |
         echo "::set-output name=release_tag::$(date +%F_%H%M%S)_OpenWrt-Phicomm_N1"
@@ -223,7 +222,6 @@ jobs:
         echo "::set-output name=TAG_STATUS::success"
         
     - name: Upload firmware to release
-      #if: steps.tag.outputs.TAG_STATUS == 'success'
       uses: softprops/action-gh-release@v0.1.8
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

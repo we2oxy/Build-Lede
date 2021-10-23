@@ -197,7 +197,6 @@ jobs:
         echo "::set-output name=TAG_STATUS::success"
         
     - name: Upload firmware to release
-      if: steps.tag.outputs.TAG_STATUS == 'success'
       uses: softprops/action-gh-release@v0.1.8
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

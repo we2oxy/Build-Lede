@@ -77,7 +77,7 @@ jobs:
         git clone --depth=1 -b master https://github.com/vernesong/OpenClash
         cd /build/lede-1701
         ./scripts/feeds update -a
-        rm -rf feeds/packages/libs/libcap
+        rm -rf feeds/packages/libs/libcap package/feeds/luci/luci-app-dawn
         svn co https://github.com/immortalwrt/immortalwrt/trunk/package/libs/libcap feeds/packages/libs/libcap
         svn co https://github.com/coolsnowwolf/packages/trunk/net/dawn feeds/packages/net/dawn
         ./scripts/feeds install -a

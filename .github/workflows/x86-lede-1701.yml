@@ -68,6 +68,8 @@ jobs:
         git clone https://github.com/jerrykuku/luci-app-vssr.git
         git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
         git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+        svn co https://github.com/zxlhhyccc/luci-app-v2raya/trunk/ luci-app-v2raya/
+        svn co https://github.com/immortalwrt/packages/trunk/net/v2raya/ v2raya/
         cd /build/lede-1701
         ./scripts/feeds update -a
         rm -rf feeds/packages/libs/libcap package/feeds/luci/luci-app-dawn

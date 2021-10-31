@@ -44,6 +44,13 @@ jobs:
         [ -f /etc/issue ] && cat /etc/issue
         ulimit -a
         df -hP
+        sudo mkdir -pv /build/{package,upload,buildinfo}
+        sudo chown -R runner:runner /build
+        
+    - name: Checkout
+      run: |
+        sudo chmod a+x $GITHUB_WORKSPACE/scripts/*.sh
+        sh $GITHUB_WORKSPACE/scripts/GenerateConfig_init.sh
         
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
@@ -51,12 +58,11 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        
-    - name: GenerateConfig
+
+    - name: Generate
       run: |
-        sudo chmod a+x $GITHUB_WORKSPACE/scripts/*.sh
         sh $GITHUB_WORKSPACE/scripts/GenerateConfig.sh
-        
+
     - name: Deliver buildinfo
       if: ${{ always() }}
       uses: actions/upload-artifact@v2

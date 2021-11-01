@@ -50,7 +50,7 @@ jobs:
     - name: Checkout
       run: |
         sudo chmod a+x $GITHUB_WORKSPACE/scripts/*.sh
-        sh $GITHUB_WORKSPACE/scripts/GenerateConfig_init.sh
+        bash $GITHUB_WORKSPACE/scripts/GenerateConfig_init.sh
         
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
@@ -61,7 +61,7 @@ jobs:
 
     - name: Generate
       run: |
-        sh $GITHUB_WORKSPACE/scripts/GenerateConfig.sh
+        bash $GITHUB_WORKSPACE/scripts/GenerateConfig.sh
 
     - name: Deliver buildinfo
       if: ${{ always() }}

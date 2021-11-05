@@ -1,14 +1,14 @@
 #!/bin/bash
 
 fun_backup_defaultsettings(){
-	echo "\n-----backup start-----"
+	echo "\n-----$FUNCNAME start-----"
 	cd /build/lede/package/lean/default-settings/files/
 	cp zzz-default-settings zzz-default-settings.bak
-	echo "\n-----backup successful------"
+	echo "\n-----$FUNCNAME successful------"
 }
 
 fun_sync_sourecode(){
-	echo "\n-----sync_sourecode start-----"
+	echo "\n-----$FUNCNAME start-----"
 	cd /build/lede/package/lean/  
 	rm -rf luci-theme-argon
 	git clone https://github.com/jerrykuku/lua-maxminddb.git
@@ -16,35 +16,33 @@ fun_sync_sourecode(){
 	git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
 	svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash luci-app-openclash
 	svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ openwrt-passwall
-	echo "\n-----sync_sourecode successful------"
+	echo "\n-----$FUNCNAME successful------"
 }
 
 fun_del_snapshot(){
-	echo "\n-----del_snapshot start-----"
-	cd /build/lede/
-	sed -i 's,-SNAPSHOT,,g' include/version.mk
-	sed -i 's,-SNAPSHOT,,g' package/base-files/image-config.in
-	echo "\n-----del_snapshot successful------"
+	echo "\n-----$FUNCNAME start-----"
+	sed -i 's,-SNAPSHOT,,g' /build/lede/include/version.mk
+	sed -i 's,-SNAPSHOT,,g' /build/lede/package/base-files/image-config.in
+	echo "\n-----$FUNCNAME successful------"
 }
 
 fun_del_passwd(){
-	echo "\n-----del_passwd start-----"
+	echo "\n-----$FUNCNAME start-----"
 	sed -i '/CYXluq4wUazHjmCDBCqXF/d'  /build/lede/package/lean/default-settings/files/zzz-default-settings
-	echo "\n-----del_passwd successful------"
+	echo "\n-----$FUNCNAME successful------"
 }
  
 fun_import_rules(){
-	echo "\n-----import_rules start-----"
+	echo "\n-----$FUNCNAME start-----"
 	svn co https://github.com/we2oxy/OpenWrtConfig/trunk/files/etc /build/lede/files/etc
-	cd /build/lede/files/etc/
-	cp -R ssrplus/ vssr/
-	rm -rf .svn/
+	cp -R /build/lede/files/etc/ssrplus/ /build/lede/files/etc/vssr/
+	rm -rf /build/lede/files/etc/.svn/
 	ls -lahR /build/lede/files/
-	echo "\n-----import_rules successful------"
+	echo "\n-----$FUNCNAME successful------"
  }
 
 fun_vssr(){
-	echo "\n-----modify vssr start-----"
+	echo "\n-----$FUNCNAME start-----"
 	sed -i '/result.encrypt_method/a\        result.fast_open = "1"' /build/lede/package/lean/luci-app-vssr/root/usr/share/vssr/subscribe.lua
 	sed -i 's,ispip.clang.cn/all_cn.txt,cdn.jsdelivr.net/gh/QiuSimons/Chnroute@master/dist/chnroute/chnroute.txt,g' /build/lede/package/lean/luci-app-vssr/luasrc/controller/vssr.lua
 	sed -i 's,ispip.clang.cn/all_cn.txt,cdn.jsdelivr.net/gh/QiuSimons/Chnroute@master/dist/chnroute/chnroute.txt,g' /build/lede/package/lean/luci-app-vssr/root/usr/share/vssr/update.lua
@@ -54,12 +52,12 @@ fun_vssr(){
 	grep -C 2 "chnroute.txt" /build/lede/package/lean/luci-app-vssr/luasrc/controller/vssr.lua
 	echo "\nraw.githubusercontent.com/QiuSimons/Chnroute/master/dist/chnroute/chnroute.txt /build/lede/package/lean/luci-app-vssr/root/usr/share/vssr/update.lua\n"
 	grep -C 2 "chnroute.txt" /build/lede/package/lean/luci-app-vssr/root/usr/share/vssr/update.lua
-	echo "\n-----modify vssr successful------"
+	echo "\n-----$FUNCNAME successful------"
  }
  
 
 fun_ssrplus(){
-	echo "\n-----modify ssrplus start-----"
+	echo "\n-----$FUNCNAME start-----"
 	cd /build/lede/feeds/helloworld/
 	rm -rf luci-app-ssr-plus/po/zh_Hans
 	sed -i '/result.encrypt_method/a\                result.fast_open = "1"' luci-app-ssr-plus/root/usr/share/shadowsocksr/subscribe.lua
@@ -74,7 +72,7 @@ fun_ssrplus(){
 	grep -C 2 "Loyalsoldier/v2ray-rules-dat"  luci-app-ssr-plus/root/etc/init.d/shadowsocksr
 	echo "\ntranslate("QiuSimons/Chnroute") luasrc/model/cbi/shadowsocksr/advanced.lua\n"
 	grep -C 2 'translate("QiuSimons/Chnroute")' luci-app-ssr-plus/luasrc/model/cbi/shadowsocksr/advanced.lua
-	echo "\n-----modify ssrplus successful------"
+	echo "\n-----$FUNCNAME successful------"
  }
  
 

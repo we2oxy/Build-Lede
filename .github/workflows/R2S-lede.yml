@@ -139,11 +139,11 @@ jobs:
       run: |
         cd /build/lede/
         echo -e "$(nproc) thread compile"
-        time make tools/compile -j$(nproc) || time make tools/compile -j1 V=s
-        time make toolchain/compile -j$(nproc) || time make toolchain/compile -j1 V=s
-        time make target/compile -j$(nproc) || time make target/compile -j1 V=s IGNORE_ERRORS=1
+        time make tools/compile -j$(nproc)
+        time make toolchain/compile -j$(nproc)
+        time make target/compile -j$(nproc)
         time make diffconfig
-        time make package/compile -j$(nproc) IGNORE_ERRORS=1 || time make package/compile -j1 V=s IGNORE_ERRORS=1
+        time make package/compile -j$(nproc) IGNORE_ERRORS=1
         time make package/index
 
     - name: Generate Firmware

@@ -71,5 +71,14 @@ uci set luci.diag.ping='223.5.5.5'
 uci set luci.diag.route='223.5.5.5'
 uci commit luci
 
+/etc/init.d/nginx stop
+/etc/init.d/nginx disable
+
+/etc/init.d/samba stop
+/etc/init.d/samba disable
+
+/etc/init.d/uhttp start
+/etc/init.d/uhttp enable
+
 exit 0
 

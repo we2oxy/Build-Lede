@@ -12,8 +12,8 @@ function fun_addluciapp(){
 	git clone https://github.com/jerrykuku/luci-app-vssr.git package/lean/luci-app-vssr
 	git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner package/lean/luci-app-onliner
 	git clone --depth=1 -b master https://github.com/vernesong/OpenClash package/lean/OpenClash
-	./scripts/feeds update -a
-	./scripts/feeds install -a
+	sh -c "./scripts/feeds update -a" || sh -c "./scripts/feeds update -a"
+	sh -c "./scripts/feeds install -a" || sh -c "./scripts/feeds install -a"
 	echo "$FUNCNAME successful"
 }
 
@@ -60,8 +60,8 @@ function fun_lede1701(){
 	git clone https://github.com/jerrykuku/luci-app-vssr.git package/lean/luci-app-vssr
 	git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner package/lean/luci-app-onliner
 	git clone --depth=1 -b master https://github.com/vernesong/OpenClash package/lean/OpenClash
-	./scripts/feeds update -a
-	./scripts/feeds install -a
+	sh -c "./scripts/feeds update -a" || sh -c "./scripts/feeds update -a"
+	sh -c "./scripts/feeds install -a" || sh -c "./scripts/feeds install -a"
 	wget -O .config https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/x86-lede-1701.buildinfo
 	echo "$FUNCNAME successful"
 	sleep 3
@@ -73,3 +73,4 @@ fun_N1
 fun_R2S
 fun_x64
 fun_lede1701
+sudo chown -R runner:runner /build/lede*

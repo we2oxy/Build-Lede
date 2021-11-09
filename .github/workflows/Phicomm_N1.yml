@@ -86,7 +86,7 @@ jobs:
         sed -i '/DISTRIB_REVISION/d' /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i '/DISTRIB_DESCRIPTION/d' /build/lede/package/lean/default-settings/files/zzz-default-settings
         cat $GITHUB_WORKSPACE/uciconf/lede-master/lede-master_settings >> /build/lede/package/lean/default-settings/files/zzz-default-settings
-        sed -i 's/10.0.0.199/10.0.0.223/g' /build/lede/package/lean/default-settings/files/zzz-default-settings
+        sed -i 's/10.0.0.199/172.16.0.223/g' /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i '/CYXluq4wUazHjmCDBCqXF/d'  /build/lede/package/lean/default-settings/files/zzz-default-settings
         cat /build/lede/package/lean/default-settings/files/zzz-default-settings
         sed -i 's,-SNAPSHOT,,g' /build/lede/include/version.mk
@@ -210,7 +210,7 @@ jobs:
         echo "::set-output name=release_tag::$(date +%F_%H%M%S)_OpenWrt-Phicomm_N1"
         echo "::set-output name=release_date::$(date +"%F_%H%M%S")"
         touch release.txt
-        echo "http://10.0.0.223" > release.txt
+        echo "http://172.16.0.223" > release.txt
         echo "PASSWD = 'password'" >> release.txt
         #echo "::set-output name=status::success"
         echo "::set-output name=TAG_STATUS::success"

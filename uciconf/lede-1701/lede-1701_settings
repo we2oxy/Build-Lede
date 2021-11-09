@@ -59,11 +59,14 @@ uci set dhcp.lan.interface='lan'
 uci set dhcp.lan.start='10'
 uci set dhcp.lan.leasetime='168h'
 uci set dhcp.lan.limit='200'
-uci set dhcp.lan.dhcp_option='6,10.0.0.99,223.5.5.5,119.29.29.29'
+uci set dhcp.lan.dhcp_option='1,255.255.255.0' '6,10.0.0.99,223.5.5.5,119.29.29.29'
 uci set dhcp.lan.force='1'
 uci set dhcp.lan.dhcpv6='disabled'
 uci -q delete dhcp.lan.dhcpv6
 uci -q delete dhcp.lan.ra
+uci set dhcp.@domain[0]=domain
+uci set dhcp.@domain[0].name='myroute'
+uci set dhcp.@domain[0].ip='10.0.0.99'
 uci commit dhcp
 
 uci set luci.diag.dns='qq.com'

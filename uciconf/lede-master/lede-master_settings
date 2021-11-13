@@ -80,8 +80,11 @@ uci commit luci
 /etc/init.d/samba stop
 /etc/init.d/samba disable
 
-/etc/init.d/uhttp start
-/etc/init.d/uhttp enable
+/etc/init.d/uhttpd start
+/etc/init.d/uhttpd enable
+
+/etc/init.d/nlbwmon stop
+/etc/init.d/nlbwmon disable
 
 exit 0
 

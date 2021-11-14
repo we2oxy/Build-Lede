@@ -15,6 +15,8 @@ fun_sync_sourecode(){
 	git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
 	svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash luci-app-openclash
 	svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ openwrt-passwall
+	svn co https://github.com/QiuSimons/openwrt-mos/trunk/mosdns mosdns
+	svn co https://github.com/QiuSimons/openwrt-mos/trunk/luci-app-mosdns luci-app-mosdns
 	echo "\n-----sync_sourecode successful------"
 }
 

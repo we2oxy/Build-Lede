@@ -1,0 +1,216 @@
+name:  x86-lede-1701
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+  schedule:
+    - cron:  '40 15 * * 4'
+  watch:
+    types: started
+
+jobs:
+  x86-lede-1701:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      
+    - name: Init Building Dependencies
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo timedatectl set-timezone "Asia/Shanghai"
+        echo "Init Building:$(date +%F_%H%M%S)"
+        sudo -E swapoff -a
+        docker rmi $(docker images -q) 
+        sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc /swapfile /etc/apt/sources.list.d
+        sudo -E apt-get remove -y --purge azure-cli ghc zulu* hhvm llvm* firefox google* dotnet* powershell mysql* php* mssql-tools msodbcsql17 android*
+        sudo -E apt-get update -y 
+        sudo -E apt-get full-upgrade -y 
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804) rdate ca-certificates
+        sudo -E apt-get autoremove -y --purge 
+        sudo -E apt-get clean -y 
+        
+    - name: Show system
+      run: |
+        echo -e "Total CPU cores\t: $(nproc)"
+        cat /proc/cpuinfo | grep 'model name'
+        free -h
+        uname -a
+        [ -f /proc/version ] && cat /proc/version
+        [ -f /etc/issue.net ] && cat /etc/issue.net
+        [ -f /etc/issue ] && cat /etc/issue
+        ulimit -a
+        
+    - name: Clone Source
+      run: |
+        echo "Clone Source":$(date +%F_%H%M%S)
+        df -hP
+        sudo mkdir -pv /build/{package,upload,buildinfo}
+        sudo chown -R runner:runner /build
+        git clone --branch lede-17.01 --single-branch  https://github.com/coolsnowwolf/openwrt.git /build/lede-1701
+        cd /build/lede-1701
+        echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall" >> feeds.conf.default
+        echo "#src-git kenzo https://github.com/kenzok8/openwrt-packages" >> feeds.conf.default
+        cat -n feeds.conf.default      
+        rm -rf tmp/
+        cd package/lean/
+        rm -rf luci-theme-argon
+        git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+        git clone https://github.com/jerrykuku/lua-maxminddb.git
+        git clone https://github.com/jerrykuku/luci-app-vssr.git
+        git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
+        git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+        svn co https://github.com/zxlhhyccc/luci-app-v2raya/trunk/ luci-app-v2raya/
+        svn co https://github.com/immortalwrt/packages/trunk/net/v2raya/ v2raya/
+        cd /build/lede-1701
+        sh -c "./scripts/feeds update -a" || sh -c "./scripts/feeds update -a"
+        rm -rf feeds/packages/libs/libcap package/feeds/luci/luci-app-dawn
+        svn co https://github.com/immortalwrt/immortalwrt/trunk/package/libs/libcap feeds/packages/libs/libcap
+        svn co https://github.com/coolsnowwolf/packages/trunk/net/dawn feeds/packages/net/dawn
+        sh -c "./scripts/feeds install -a" || sh -c "./scripts/feeds install -a"
+        wget -O /build/lede-1701/x86-lede-1701.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/x86-lede-1701.buildinfo
+        cat /build/lede-1701/x86-lede-1701.buildinfo > "/build/lede-1701/.config"
+        
+    - name: Configuration Customization
+      id: configuration
+      run: |
+        echo "Configuration Customization":$(date +%F_%H%M%S)
+        sed -i "/Load Average/i\\\t\t<tr><td width="33%"><%:Build Date %></td><td>`date +%F_%T`</td></tr>" /build/lede/package/lean/autocore/files/x86/index.htm
+        grep "Build Date" /build/lede/package/lean/autocore/files/x86/index.htm
+        sed -i '52s@+libelf @+libelf +libcap @' /build/lede-1701/package/network/utils/iproute2/Makefile
+        sed -i '$d' /build/lede-1701/package/lean/default-settings/files/zzz-default-settings
+        sed -i '/DISTRIB_REVISION/d' /build/lede-1701/package/lean/default-settings/files/zzz-default-settings
+        sed -i '/DISTRIB_DESCRIPTION/d' /build/lede-1701/package/lean/default-settings/files/zzz-default-settings
+        cat $GITHUB_WORKSPACE/uciconf/lede-1701/lede-1701_settings >> /build/lede-1701/package/lean/default-settings/files/zzz-default-settings
+        sed -i 's/10.0.0.99/192.168.99.206/g' /build/lede-1701/package/lean/default-settings/files/zzz-default-settings
+        sed -i '/CYXluq4wUazHjmCDBCqXF/d'  /build/lede-1701/package/lean/default-settings/files/zzz-default-settings
+        cat /build/lede-1701/package/lean/default-settings/files/zzz-default-settings
+        sed -i 's,-SNAPSHOT,,g' /build/lede-1701/include/version.mk
+        sed -i 's,-SNAPSHOT,,g' /build/lede-1701/package/base-files/image-config.in
+        svn co https://github.com/we2oxy/OpenWrtConfig/trunk/files/etc /build/lede-1701/files/etc
+        cp -R /build/lede-1701/files/etc/ssrplus/ /build/lede-1701/files/etc/vssr/
+        rm -rf /build/lede-1701/files/etc/.svn/
+        ls -lahR /build/lede-1701/files/
+        # luci-app-vssr
+        sed -i '/result.encrypt_method/a\        result.fast_open = "1"' /build/lede-1701/package/lean/luci-app-vssr/root/usr/share/vssr/subscribe.lua
+        sed -i 's,ispip.clang.cn/all_cn.txt,cdn.jsdelivr.net/gh/QiuSimons/Chnroute@master/dist/chnroute/chnroute.txt,g' /build/lede-1701/package/lean/luci-app-vssr/luasrc/controller/vssr.lua
+        sed -i 's,ispip.clang.cn/all_cn.txt,cdn.jsdelivr.net/gh/QiuSimons/Chnroute@master/dist/chnroute/chnroute.txt,g' /build/lede-1701/package/lean/luci-app-vssr/root/usr/share/vssr/update.lua
+        # luci-app-ssr-plus
+        rm -rf  /build/lede/feeds/helloworld/luci-app-ssr-plus/po/zh_Hans
+        sed -i '/result.encrypt_method/a\                result.fast_open = "1"' /build/lede-1701/feeds/helloworld/luci-app-ssr-plus/root/usr/share/shadowsocksr/subscribe.lua
+        sed -i 's,ispip.clang.cn/all_cn,cdn.jsdelivr.net/gh/QiuSimons/Chnroute@master/dist/chnroute/chnroute.txt,' /build/lede-1701/feeds/helloworld/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
+        sed -i 's,YW5vbnltb3Vz/domain-list-community/release/gfwlist.txt,Loyalsoldier/v2ray-rules-dat/release/gfw.txt,'  /build/lede-1701/feeds/helloworld/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
+        sed -i '/Clang.CN.CIDR/a\o:value("https://cdn.jsdelivr.net/gh/QiuSimons/Chnroute@master/dist/chnroute/chnroute.txt", translate("QiuSimons/Chnroute"))\' /build/lede-1701/feeds/helloworld/luci-app-ssr-plus/luasrc/model/cbi/shadowsocksr/advanced.lua
+
+    - name: SSH connection to Actions
+      uses: P3TERX/ssh2actions@v1.0.0
+      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        
+    - name: Defconfig
+      id: defconfig
+      run: |
+        echo "Build lede":$(date +%F_%H%M%S)
+        cd /build/lede-1701/ && ls -lash
+        sh -c "./scripts/feeds install -a" || sh -c "./scripts/feeds install -a"
+        time make defconfig
+        time make -j8 download || time make -j1 download || time make -j1 download V=s 
+        ./scripts/diffconfig.sh > /build/buildinfo/x86-lede-1701.buildinfo
+        wc -l /build/buildinfo/x86-lede-1701.buildinfo
+        cat /build/buildinfo/x86-lede-1701.buildinfo
+        echo "########################################"
+        ls -lh /build/buildinfo/
+
+    - name: Deliver buildinfo
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: OpenWrt_buildinfo
+        path: /build/buildinfo/
+        if-no-files-found: ignore
+        
+    - name: Compile
+      id: tools
+      run: |
+        cd /build/lede-1701/
+        echo -e "$(nproc) thread compile"
+        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
+        make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
+        make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
+        make diffconfig
+        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
+        make package/index
+
+    - name: Generate Firmware
+      id: generate
+      run: |
+        cd /build/lede-1701/
+        echo -e "$(nproc) thread compile"
+        time make package/install -j$(nproc)
+        time make target/install -j$(nproc)
+        time make checksum
+        tree bin/
+        tree -d bin/
+        cd /build/lede-1701/bin/targets/x86/64 && ls -lSha
+        echo "::set-output name=BUILD_STATUS::success"
+
+    - name: Prepare artifact
+      run: |
+        rm -rf $(find /build/lede-1701/bin/targets/ -type d -name "packages")
+        cp -rf $(find /build/lede-1701/bin/targets/ -type f) /build/upload/
+        cp -rf $(find /build/lede-1701/bin/packages/ -type f -name "*.ipk") /build/package/
+        cd /build/ && zip -qr /build/upload/package_$(date +%F_%H%M%S).zip package/
+        cd /build/upload/
+        ls -lh 
+        for source_name in `ls openwrt*`;do tag_name=$(date +%F_%H%M%S)_  modify_name=$tag_name$source_name;mv $source_name $modify_name;done
+        ls -lh /build/upload/
+        cd /build/lede-1701/
+        tar -czf /build/lede_1701-dl_$(date +%F_%H%M%S).tar.gz dl/
+        ls -lhas /build/
+        
+    - name: Deliver firmware
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: OpenWrt_firmware
+        path: /build/upload/
+        if-no-files-found: ignore
+        
+    - name: Generate release tag
+      id: tag
+      run: |
+        echo "::set-output name=release_tag::$(date +%F_%H%M%S)_lede-17.01-x86"
+        echo "::set-output name=release_date::$(date +"%F_%H%M%S")"
+        touch release.txt
+        echo "http://192.168.99.206" > release.txt
+        #echo "::set-output name=status::success"
+        echo "::set-output name=TAG_STATUS::success"
+        
+    - name: Upload firmware to release
+      uses: softprops/action-gh-release@v0.1.8
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        name: ${{ steps.tag.outputs.release_date }}_lede-17.01-x86
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        body_path: release.txt
+        files: |
+          /build/upload/*
+        
+    - name: Deliver dl
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: OpenWrt_dl
+        path: /build/lede_1701-dl*.tar.gz
+        if-no-files-found: ignore

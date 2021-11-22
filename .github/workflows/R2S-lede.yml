@@ -23,7 +23,6 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Init Building Dependencies
-      #if: ${{ github.event.inputs.init == 'true' }}
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -77,6 +76,7 @@ jobs:
         sh -c "./scripts/feeds install -a" || sh -c "./scripts/feeds install -a"
         wget -O /build/lede/R2S-lede.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/R2S-lede.buildinfo
         cat /build/lede/R2S-lede.buildinfo > "/build/lede/.config"
+        
     - name: Configuration Customization
       id: configuration
       run: |
@@ -171,9 +171,6 @@ jobs:
         ls -lh 
         for source_name in `ls openwrt*`;do tag_name=$(date +%F_%H%M%S)_  modify_name=$tag_name$source_name;mv $source_name $modify_name;done
         ls -lh /build/upload/
-        cd /build/lede/
-        tar -czf /build/lede-dl_$(date +%F_%H%M%S).tar.gz dl/
-        ls -lhas /build/
         
     - name: Deliver firmware
       if: ${{ always() }}
@@ -203,11 +200,3 @@ jobs:
         body_path: release.txt
         files: |
           /build/upload/*
-        
-    - name: Deliver dl
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: OpenWrt_dl
-        path: /build/lede-dl*.tar.gz
-        if-no-files-found: ignore

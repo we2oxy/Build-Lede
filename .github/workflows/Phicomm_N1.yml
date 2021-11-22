@@ -77,6 +77,7 @@ jobs:
         sh -c "./scripts/feeds install -a" || sh -c "./scripts/feeds install -a"
         wget -O /build/lede/N1-openwrt.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/N1-openwrt.buildinfo
         cat /build/lede/N1-openwrt.buildinfo > "/build/lede/.config"
+        
     - name: Configuration Customization
       id: configuration
       run: |
@@ -184,9 +185,6 @@ jobs:
         cd /build/ && zip -qr /build/upload/package_$(date +%F_%H%M%S).zip package/
         cd /build/upload/
         ls -lh 
-        cd /build/lede/
-        tar -czf /build/lede-dl_$(date +%F_%H%M%S).tar.gz dl/
-        ls -lhas /build/
         
     - name: mk s905d n1
       run: |
@@ -228,11 +226,3 @@ jobs:
         body_path: release.txt
         files: |
           /build/upload/*
-        
-    - name: Deliver dl
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: OpenWrt_dl
-        path: /build/lede-dl*.tar.gz
-        if-no-files-found: ignore

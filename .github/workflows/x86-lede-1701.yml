@@ -174,9 +174,6 @@ jobs:
         ls -lh 
         for source_name in `ls openwrt*`;do tag_name=$(date +%F_%H%M%S)_  modify_name=$tag_name$source_name;mv $source_name $modify_name;done
         ls -lh /build/upload/
-        cd /build/lede-1701/
-        tar -czf /build/lede_1701-dl_$(date +%F_%H%M%S).tar.gz dl/
-        ls -lhas /build/
         
     - name: Deliver firmware
       if: ${{ always() }}
@@ -206,11 +203,3 @@ jobs:
         body_path: release.txt
         files: |
           /build/upload/*
-        
-    - name: Deliver dl
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: OpenWrt_dl
-        path: /build/lede_1701-dl*.tar.gz
-        if-no-files-found: ignore

@@ -4,20 +4,12 @@ on:
   repository_dispatch:
   workflow_dispatch:
     inputs:
-      # artifacts:
-        # description: 'Cleanup-Old-Artifacts'
-        # required: true
-        # default: '"15d"'
       workflow:
         description: 'Cleanup-Workflow-Runs'
         required: true
         default: '15'
-      # releases:
-        # description: 'Cleanup-old-Releases'
-        # required: true
-        # default: '15'
   schedule:
-    - cron: 0 2 */15 * *
+    - cron: 0 16 2 */2 *
     
 jobs: 
   # Cleanup-Old-Artifacts:
@@ -37,7 +29,7 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: 1
+          retain_days: 45
  
   # Cleanup-old-Releases:
     # needs: Cleanup-Workflow-Runs

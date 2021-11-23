@@ -159,11 +159,16 @@ jobs:
         cd /build/lede/
         echo -e "$(nproc) thread compile"
         make -j$(($(nproc) + 1)) || make -j$(($(nproc) + 1)) V=s 2>&1 | tee -a build.log 
-        grep -C 20 -i -E "^make.*(error|[12345]...Entering dir)" build.log 
         tree bin/
         tree -d bin/
         cd /build/lede/bin/targets/armvirt/64 && ls -lSha
-          
+
+    - name: Check Error
+      if: ${{ failure() }}
+      run: |
+        echo "Check Error":$(date +%F_%H%M%S)
+        grep -C 20 -i -E "^make.*(error|[12345]...Entering dir)" build.log
+
     - name: Prepare artifact
       run: |
         rm -rf $(find /build/lede/bin/targets/ -type d -name "packages")

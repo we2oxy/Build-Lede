@@ -142,21 +142,8 @@ jobs:
       run: |
         cd /build/lede/
         echo -e "$(nproc) thread compile"
-        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
-        make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
-        make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
-        make diffconfig
-        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
-        make package/index
-
-    - name: Generate Firmware
-      id: generate
-      run: |
-        cd /build/lede/
-        echo -e "$(nproc) thread compile"
-        time make package/install -j$(nproc)
-        time make target/install -j$(nproc)
-        time make checksum
+        make -j$(($(nproc) + 1)) || make -j$(($(nproc) + 1)) V=s 2>&1 | tee -a build.log 
+        grep -C 20 -i -E "^make.*(error|[12345]...Entering dir)" build.log 
         tree bin/
         tree -d bin/
         cd /build/lede/bin/targets/x86/64/ && ls -lSha

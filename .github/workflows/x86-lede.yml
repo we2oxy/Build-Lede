@@ -37,6 +37,18 @@ jobs:
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804) rdate ca-certificates
         sudo -E apt-get autoremove -y --purge 
         sudo -E apt-get clean -y 
+        sh -c "ulimit -n 65535"
+        
+    - name: Show system
+      run: |
+        echo -e "Total CPU cores\t: $(nproc)"
+        cat /proc/cpuinfo | grep 'model name'
+        free -h
+        [ -f /proc/version ] && cat /proc/version
+        [ -f /etc/issue.net ] && cat /etc/issue.net
+        [ -f /etc/issue ] && cat /etc/issue
+        ulimit -a
+        df -hP
         
     - name: Clone Source
       run: |

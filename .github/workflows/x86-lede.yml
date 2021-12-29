@@ -51,11 +51,11 @@ jobs:
         rm -rf tmp/
         cd package/lean/
         rm -rf luci-theme-argon
-        git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
-        git clone https://github.com/jerrykuku/lua-maxminddb.git
-        git clone https://github.com/jerrykuku/luci-app-vssr.git
-        git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
-        git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+        git clone -b 18.06 --depth=1 https://github.com/jerrykuku/luci-theme-argon.git
+        git clone -b master --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
+        git clone -b master --depth=1 https://github.com/jerrykuku/luci-app-vssr.git
+        git clone -b master --depth=1 https://github.com/rufengsuixing/luci-app-onliner
+        git clone -b master --depth=1 https://github.com/vernesong/OpenClash
         svn co https://github.com/zxlhhyccc/luci-app-v2raya/trunk/ luci-app-v2raya/
         svn co https://github.com/immortalwrt/packages/trunk/net/v2raya/ v2raya/
         cd /build/lede

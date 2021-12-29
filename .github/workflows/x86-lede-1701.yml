@@ -50,11 +50,11 @@ jobs:
         rm -rf tmp/
         cd package/lean/
         rm -rf luci-theme-argon
-        git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
-        git clone https://github.com/jerrykuku/lua-maxminddb.git
-        git clone https://github.com/jerrykuku/luci-app-vssr.git
-        git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
-        git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+        git clone -b 18.06 --depth=1 https://github.com/jerrykuku/luci-theme-argon.git
+        git clone -b master --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
+        git clone -b master --depth=1 https://github.com/jerrykuku/luci-app-vssr.git
+        git clone -b master --depth=1 https://github.com/rufengsuixing/luci-app-onliner
+        git clone -b master --depth=1 https://github.com/vernesong/OpenClash
         cd /build/lede-1701
         sh -c "./scripts/feeds update -a" || sh -c "./scripts/feeds update -a"
         rm -rf feeds/packages/libs/libcap package/feeds/luci/luci-app-dawn

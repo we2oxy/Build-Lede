@@ -55,14 +55,17 @@ jobs:
         git clone -b master --depth=1 https://github.com/jerrykuku/luci-app-vssr.git
         git clone -b master --depth=1 https://github.com/rufengsuixing/luci-app-onliner
         git clone -b master --depth=1 https://github.com/vernesong/OpenClash
+        svn co https://github.com/zxlhhyccc/luci-app-v2raya/trunk/ luci-app-v2raya/
+        svn co https://github.com/immortalwrt/packages/trunk/net/v2raya/ v2raya/
         cd /build/lede-1701
-        sh -c "./scripts/feeds update -a" || sh -c "./scripts/feeds update -a"
         rm -rf feeds/packages/libs/libcap package/feeds/luci/luci-app-dawn
+        ./scripts/feeds update -a
         svn co https://github.com/immortalwrt/immortalwrt/trunk/package/libs/libcap feeds/packages/libs/libcap
         svn co https://github.com/coolsnowwolf/packages/trunk/net/dawn feeds/packages/net/dawn
-        sh -c "./scripts/feeds install -a" || sh -c "./scripts/feeds install -a"
+        ./scripts/feeds install -a
         wget -O /build/lede-1701/x86-lede-1701.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/x86-lede-1701.buildinfo
         cat /build/lede-1701/x86-lede-1701.buildinfo > "/build/lede-1701/.config"
+        ./scripts/feeds install -a
         
     - name: Configuration Customization
       id: configuration

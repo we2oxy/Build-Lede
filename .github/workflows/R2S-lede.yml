@@ -59,10 +59,11 @@ jobs:
         svn co https://github.com/zxlhhyccc/luci-app-v2raya/trunk/ luci-app-v2raya/
         svn co https://github.com/immortalwrt/packages/trunk/net/v2raya/ v2raya/
         cd /build/lede
-        sh -c "./scripts/feeds update -a" || sh -c "./scripts/feeds update -a"
-        sh -c "./scripts/feeds install -a" || sh -c "./scripts/feeds install -a"
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
         wget -O /build/lede/R2S-lede.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/R2S-lede.buildinfo
         cat /build/lede/R2S-lede.buildinfo > "/build/lede/.config"
+        ./scripts/feeds install -a
         
     - name: Configuration Customization
       id: configuration

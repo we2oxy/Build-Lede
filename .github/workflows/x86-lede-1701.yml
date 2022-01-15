@@ -62,7 +62,7 @@ jobs:
         svn co https://github.com/immortalwrt/immortalwrt/trunk/package/libs/libcap feeds/packages/libs/libcap
         svn co https://github.com/coolsnowwolf/packages/trunk/net/dawn feeds/packages/net/dawn
         svn co https://github.com/immortalwrt/packages/trunk/net/v2raya/ feeds/packages/net/v2raya/
-        svn co https://github.com/coolsnowwolf/packages/trunk/lang/node-yarn feeds/packages/net/node-yarn/
+        svn co https://github.com/coolsnowwolf/packages/trunk/lang/node-yarn feeds/packages/lang/node-yarn/
         ./scripts/feeds install -a
         wget -O /build/lede-1701/x86-lede-1701.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/x86-lede-1701.buildinfo
         cat /build/lede-1701/x86-lede-1701.buildinfo > "/build/lede-1701/.config"

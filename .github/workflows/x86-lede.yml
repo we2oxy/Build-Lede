@@ -63,6 +63,7 @@ jobs:
         ./scripts/feeds install -a
         wget -O /build/lede/x86-lede.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/x86-lede.buildinfo
         cat /build/lede/x86-lede.buildinfo > "/build/lede/.config"
+        ./scripts/feeds install -a
         
     - name: Configuration Customization
       id: configuration

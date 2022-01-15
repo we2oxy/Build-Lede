@@ -58,10 +58,10 @@ jobs:
         git clone -b master --depth=1 https://github.com/rufengsuixing/luci-app-onliner
         git clone -b master --depth=1 https://github.com/vernesong/OpenClash
         svn co https://github.com/zxlhhyccc/luci-app-v2raya/trunk/ luci-app-v2raya/
-        svn co https://github.com/immortalwrt/packages/trunk/net/v2raya/ v2raya/
         cd /build/lede
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+        svn co https://github.com/immortalwrt/packages/trunk/net/v2raya/ feeds/packages/net/v2raya/
         wget -O /build/lede/N1-openwrt.buildinfo https://raw.githubusercontent.com/we2oxy/Build-Lede/master/buildinfo/N1-openwrt.buildinfo
         cat /build/lede/N1-openwrt.buildinfo > "/build/lede/.config"
         ./scripts/feeds install -a

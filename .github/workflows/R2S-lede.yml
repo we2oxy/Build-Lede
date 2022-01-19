@@ -95,6 +95,9 @@ jobs:
         sed -i 's,ispip.clang.cn/all_cn,cdn.jsdelivr.net/gh/QiuSimons/Chnroute@master/dist/chnroute/chnroute.txt,' /build/lede/feeds/helloworld/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
         sed -i 's,YW5vbnltb3Vz/domain-list-community/release/gfwlist.txt,Loyalsoldier/v2ray-rules-dat/release/gfw.txt,'  /build/lede/feeds/helloworld/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
         sed -i '/Clang.CN.CIDR/a\o:value("https://cdn.jsdelivr.net/gh/QiuSimons/Chnroute@master/dist/chnroute/chnroute.txt", translate("QiuSimons/Chnroute"))\' /build/lede/feeds/helloworld/luci-app-ssr-plus/luasrc/model/cbi/shadowsocksr/advanced.lua
+        head -30 /build/lede/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+        sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" /build/lede/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+        head -30 /build/lede/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
         
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0

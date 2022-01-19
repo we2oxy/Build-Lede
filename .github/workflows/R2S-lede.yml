@@ -164,6 +164,7 @@ jobs:
         echo "::set-output name=release_date::$(date +"%F_%H%M%S")"
         touch release.txt
         echo "http://192.168.99.208" > release.txt
+        echo "exchange WAN&LAN!!!" >> release.txt
         #echo "::set-output name=status::success"
         echo "::set-output name=TAG_STATUS::success"
         

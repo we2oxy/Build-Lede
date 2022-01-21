@@ -82,6 +82,8 @@ jobs:
         sed -i 's,-SNAPSHOT,,g' /build/lede/include/version.mk
         sed -i 's,-SNAPSHOT,,g' /build/lede/package/base-files/image-config.in
         svn co https://github.com/we2oxy/OpenWrtConfig/trunk/files/etc /build/lede/files/etc
+        curl -O /build/lede/files/etc/ssrplus/direct_microsoft.txt https://raw.githubusercontent.com/1715173329/ssrplus-routing-rules/master/direct/microsoft.txt
+        cat /build/lede/files/etc/ssrplus/direct_microsoft.txt >> /build/lede/files/etc/ssrplus/white.list
         cp -R /build/lede/files/etc/ssrplus/ /build/lede/files/etc/vssr/
         rm -rf /build/lede/files/etc/.svn/
         ls -lahR /build/lede/files/

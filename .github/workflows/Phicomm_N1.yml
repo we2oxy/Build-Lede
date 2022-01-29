@@ -86,6 +86,7 @@ jobs:
         svn co https://github.com/we2oxy/OpenWrtConfig/trunk/files/etc /build/lede/files/etc
         wget -O /build/lede/files/etc/ssrplus/direct_microsoft.txt https://raw.githubusercontent.com/1715173329/ssrplus-routing-rules/master/direct/microsoft.txt
         cat /build/lede/files/etc/ssrplus/direct_microsoft.txt >> /build/lede/files/etc/ssrplus/white.list
+        cat /build/lede/files/etc/ssrplus/white.list
         cp -R /build/lede/files/etc/ssrplus/ /build/lede/files/etc/vssr/
         rm -rf /build/lede/files/etc/.svn/
         ls -lahR /build/lede/files/

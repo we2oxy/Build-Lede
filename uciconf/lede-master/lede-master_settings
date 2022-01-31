@@ -67,7 +67,7 @@ uci set dhcp.@domain[0].name='myroute'
 uci set dhcp.@domain[0].ip='10.0.0.199'
 uci commit dhcp
 
-uci set luci.diag.dns='public1.alidns.com'
+uci set luci.diag.dns='apple.com.cn'
 uci set luci.diag.ping='223.5.5.5'
 uci set luci.diag.route='223.5.5.5'
 uci commit luci

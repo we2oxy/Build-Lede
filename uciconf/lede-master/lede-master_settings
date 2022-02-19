@@ -1,11 +1,11 @@
 uci -q batch <<-EOF
 	delete system.ntp.server
+	add_list system.ntp.server="time3.cloud.tencent.com"
 	add_list system.ntp.server="cn.ntp.org.cn"
 	add_list system.ntp.server="time.apple.com"
 	add_list system.ntp.server="time.asia.apple.com"
 	add_list system.ntp.server="time1.cloud.tencent.com" 
 	add_list system.ntp.server="time2.cloud.tencent.com" 
-	add_list system.ntp.server="time3.cloud.tencent.com"
 	add_list system.ntp.server="time4.cloud.tencent.com"
 	add_list system.ntp.server="time5.cloud.tencent.com"
 	add_list system.ntp.server="ntp.aliyun.com"
@@ -57,7 +57,7 @@ uci set dhcp.lan.interface='lan'
 uci set dhcp.lan.start='10'
 uci set dhcp.lan.leasetime='6h'
 uci set dhcp.lan.limit='200'
-uci set dhcp.lan.dhcp_option='3,10.0.0.199' '6,223.6.6.6,223.5.5.5'
+uci set dhcp.lan.dhcp_option='3,10.0.0.199' '6,10.0.0.199,223.6.6.6,223.5.5.5'
 uci set dhcp.lan.force='1'
 uci set dhcp.lan.dhcpv6='disabled'
 uci -q delete dhcp.lan.dhcpv6
@@ -67,9 +67,9 @@ uci set dhcp.@domain[0].name='myroute'
 uci set dhcp.@domain[0].ip='10.0.0.199'
 uci commit dhcp
 
-uci set luci.diag.dns='qq.com'
-uci set luci.diag.ping='qq.com'
-uci set luci.diag.route='qq.com'
+uci set luci.diag.dns='www.qq.com'
+uci set luci.diag.ping='www.qq.com'
+uci set luci.diag.route='www.qq.com'
 uci commit luci
 
 /etc/init.d/nginx stop
